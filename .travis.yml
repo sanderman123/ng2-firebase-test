@@ -14,10 +14,10 @@ after_success:
   - git config user.name "Travis CI"
   - git config user.email "travis@travis-ci.org"
   - git remote add -t gh-pages origin "https://${GH_TOKEN}@github.com/$TRAVIS_REPO_SLUG"
-  - git checkout gh-pages
+  - git checkout -t origin/gh-pages
   - ls -a | grep -v ^.git$ | xargs rm -R
   - mv ../dist/* .
-  - git clone -b gh-pages --single-branch "https://${GH_TOKEN}@github.com/$TRAVIS_REPO_SLUG"
+  - ls
   - git add .
   - git status
   - node -e "console.log(require('./package.json').version);" | xargs -i git commit -m "Deploy to GitHub Pages - {}"
