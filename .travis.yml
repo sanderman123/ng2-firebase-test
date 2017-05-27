@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+  - "iojs"
+  - "7"
+
+cache: yarn
+
+script: yarn build:prod
+
+after_success:
+  - mkdir gh-pages
+  - cd gh-pages
+  - git init
+  - git config user.name "Travis CI"
+  - git config user.email "travis@travis-ci.org"
+  - git remote add -t gh-pages origin "https://${GH_TOKEN}@github.com/$TRAVIS_REPO_SLUG"
+  - git checkout gh-pages
+  - ls -a | grep -v ^.git$ | xargs rm -R
+  - mv ../dist/* .
+  - git clone -b gh-pages --single-branch "https://${GH_TOKEN}@github.com/$TRAVIS_REPO_SLUG"
+  - git add .
+  - git status
+  - node -e "console.log(require('./package.json').version);" | xargs -i git commit -m "Deploy to GitHub Pages - {}"
+  - git push -u origin gh-pages
