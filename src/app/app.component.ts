@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AuthService } from 'app/providers/auth.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +12,16 @@ export class AppComponent {
   title = 'app works!';
   items: FirebaseListObservable<any[]>;
   item: FirebaseObjectObservable<any>;
+  user: Observable<any>;
 
-  constructor(db: AngularFireDatabase) {
+  constructor(db: AngularFireDatabase, public auth: AuthService) {
     this.items = db.list('/items', {
       query: {
         orderByValue: true
       }
     });
     this.item = db.object('/item');
+    this.user = auth.getUser();
   }
 
   remove(item: FirebaseObjectObservable<any>) {
@@ -36,5 +40,9 @@ export class AppComponent {
     item.set({name: newName})
       .then(_ => console.log('success'))
       .catch(err => console.log('Error', err));
+  }
+
+  loginWithGoogle() {
+    this.auth.loginWithGoogle();
   }
 }

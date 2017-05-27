@@ -14,3 +14,8 @@
 <button (click)="remove(item)">remove</button>
 <input type="text" #newname placeholder="Name" />
 <button (click)="setName(item, newname.value)">set name</button>
+
+<h2>User</h2>
+<p>{{user | async | json}}</p>
+
+<button (click)=loginWithGoogle()>login with google</button>
