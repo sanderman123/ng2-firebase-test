@@ -11,3 +11,6 @@
 
 <h2>Object</h2>
 <p>{{(item | async)?.name}}</p>
+<button (click)="remove(item)">remove</button>
+<input type="text" #newname placeholder="Name" />
+<button (click)="setName(item, newname.value)">set name</button>
