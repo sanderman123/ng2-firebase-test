@@ -24,16 +24,12 @@ export class AppComponent {
     this.user = auth.getUser();
   }
 
-  remove(item: FirebaseObjectObservable<any>) {
-    console.log('remove:', item);
-    item.remove()
-      .then(_ => console.log('success'))
-      .catch(err => console.log('Error', err));
-
-    // item.set({'name': 'new name'})
-    //   .then(_ => console.log('settings success'))
-    //   .catch(err => console.log('error', err));
-  }
+  // remove(item: FirebaseObjectObservable<any>) {
+  //   console.log('remove:', item);
+  //   item.remove()
+  //     .then(_ => console.log('success'))
+  //     .catch(err => console.log('Error', err));
+  // }
 
   setName(item: FirebaseObjectObservable<any>, newName: string) {
     console.log('set:', item, 'newname', newName);
