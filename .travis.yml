@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - "iojs"
+  - "7"
+
+cache: yarn
+
+script: yarn build:prod
+
+after_success: 
+  - cd ./dist
+  - git init
+  - git config user.name "Travis CI"
+  - git config user.email "travis@travis-ci.org"
+  - git status
+  - git add .
+  - git status
+  - git commit -m "Deploy to GitHub Pages"
+  - echo $TRAVIS_REPO_SLUG
+  - git push --force --quiet "https://${GH_TOKEN}@github.com/$TRAVIS_REPO_SLUG" master:gh-pages > /dev/null 2>&1
